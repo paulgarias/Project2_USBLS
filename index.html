@@ -8,7 +8,11 @@
 /* On mouse hover, lighten state color */
 path:hover {
 	fill-opacity: .7;
+    background-color: rgb(167,77,78);
 }
+/* path:active {
+    color: rgb(167,77,78);
+} */
 
 /* Style for Custom Tooltip */
 div.tooltip {   
@@ -66,6 +70,7 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()               // path generator that will convert GeoJSON to SVG paths
 		  	 .projection(projection);  // tell path generator to use albersUsa projection
 
+
 //Create SVG element and append map to the SVG
 var svg = d3.select("body")
 			.append("svg")
@@ -86,7 +91,8 @@ svg.selectAll("path")
 	.data(json.features)
 	.enter()
 	.append("path")
-	.attr("d", path)
+    .attr("d", path)
+    .attr("id",function(d){return d.properties.name;})
 	.style("stroke", "#fff")
 	.style("stroke-width", "1")
 	.style("fill", function(d) {
@@ -101,9 +107,16 @@ svg.selectAll("path")
 	//If value is undefined…
 	return "rgb(213,222,217)";
 	}
-});
+}).on("click", function (event) {console.log(this.id)});
+// 213,222,217 - nice color
+// USE rgb(167,77,78) FOR HOVER COLOR
 
 });
+
 </script>
+<!-- <button class="btn demo-btn" onclick="$('body').animatescroll();">Click for a Demo</button> -->
+<div>
+
+</div>
 </body>
 </html>
