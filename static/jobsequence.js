@@ -123,7 +123,7 @@ function createVisualization(json) {
 
   nodes2 = nodes;
 
-  var path = vis.data([json]).selectAll("path")
+  var path = vis.data([json]).selectAll("g path")
       .data(nodes)
       .enter().append("svg:path")
       .attr("display", function(d) { return d.depth ? null : "none"; })
