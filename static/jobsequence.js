@@ -125,7 +125,7 @@ function createVisualization(json) {
 
   var path = vis.data([json]).selectAll("g path")
       .data(nodes)
-      .enter().append("svg:path")
+      .enter().append("path")
       .attr("display", function(d) { return d.depth ? null : "none"; })
       .attr("d", arc)
       .attr("fill-rule", "evenodd")
@@ -162,10 +162,9 @@ function mouseover(d) {
 
   var sequenceArray = d.ancestors().reverse();
   sequenceArray.shift(); // remove root node from the array
-  updateBreadcrumbs(sequenceArray, percentageString);
 
   // Fade all the segments.
-  d3.selectAll("path")
+  d3.selectAll("g#container path")
       .style("opacity", 0.3);
 
   // Then highlight only those that are an ancestor of the current segment.
@@ -184,10 +183,10 @@ function mouseleave(d) {
       .style("visibility", "hidden");
 
   // Deactivate all segments during transition.
-  d3.selectAll("path").on("mouseover", null);
+  d3.selectAll("g#container path").on("mouseover", null);
 
   // Transition each segment to full opacity and then reactivate it.
-  d3.selectAll("path")
+  d3.selectAll("g#container path")
       .transition()
       .duration(1000)
       .style("opacity", 1)
