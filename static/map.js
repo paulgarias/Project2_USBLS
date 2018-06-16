@@ -45,7 +45,8 @@ svg.selectAll("path")
 	.enter()
 	.append("path")
     .attr("d", path)
-    .attr("id",function(d){return d.properties.name;})
+	.attr("id",function(d){return d.properties.name;})
+	.attr("onclick", "$('#chart').animatescroll();")
 	.style("stroke", "#fff")
 	.style("stroke-width", "1")
 	.style("fill", function(d) {
@@ -63,5 +64,6 @@ svg.selectAll("path")
 }).on("click", sunburstPlot);
 // 213,222,217 - nice color
 // USE rgb(167,77,78) FOR HOVER COLOR
+// $('body').animatescroll(), 
 
 });
