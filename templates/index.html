@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<title>U.S. Labor Statistics</title>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v0.3.min.js"></script>
 <link rel="style/sheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> 
+<script src="static/animatescroll/animatescroll.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- <link rel="stylesheet" type="text/css" media="screen" href="static/reset.css" /> -->
 <link rel="stylesheet" type="text/css" href="static/style.css">
 <link rel="stylesheet" type="text/css" href="static/sequences.css"/>
 <style type="text/css">
@@ -12,20 +19,43 @@
 </style>
 </head>
 <body>
+    <div class="container">
+        <section class="row">
+          <div class = "col-md-8">
+            <div class = "Intro">
+              <h1 class="intro-header">United States Labor Statistics</h1>
+              <hr>
+              <p>This website is designed to visualize the laber breakdown state by state into common categories. </p>
+              <p>Select a state by clicking on it below to see a comparison of what industries are most people working in that state.</p>
+  
+            </div>
+          </div>
+          <div class = "col-md-4">
+          </div>
+          </section>
+        </div>
 
 <!-- <button class="btn demo-btn" onclick="$('body').animatescroll();">Click for a Demo</button> -->
+<!-- <a onclick="$('[id-or-class-of-element]').animatescroll();">Go to Element</a> -->
 <div id="chloropleth">
+
 </div>
 
 
       <div id="jobsequence"></div>
+
       <div id="chart">
+          <a onclick="$('[chart]').animatescroll();"></a>
+        <hr>
         <div id="explanation" style="visibility: hidden;">
           <span id="percentage"></span>
         </div>
       </div>
-
+      
 </body>
+<footer class="footer navbar-fixed-bottom">
+    <p class="text-muted text-center">&copy; Copyright Jan Paul Tony Rutgers Data Science Bootcamp</p>
+  </footer>
 <script type="text/javascript" src="static/map.js"></script>
 <script type="text/javascript" src="static/jobsequence.js"></script>
 </html>
