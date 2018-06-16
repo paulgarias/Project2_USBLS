@@ -85,7 +85,7 @@ function sunburstPlot(event) {
 	}
 
 
-	d3.json("http://127.0.0.1:5000/usa-jobs", function(response) {
+	d3.json("/usa-jobs", function(response) {
 		for (var i = 0 ; i < response.length ; i++ ) {
         		if(response[i].name==stateName){
 				json4 = {"name":"root", "children":response[i]['children']};
