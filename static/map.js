@@ -37,7 +37,7 @@ var div = d3.select("body")
     		.style("opacity", 0);
 
 // Load GeoJSON data and merge with states data
-d3.json("http://127.0.0.1:5000/us-states", function(json) {
+d3.json("/us-states", function(json) {
 		
 // Bind the data to the SVG and create one path per GeoJSON feature
 svg.selectAll("path")
