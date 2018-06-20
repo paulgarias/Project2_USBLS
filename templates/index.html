@@ -19,13 +19,15 @@
 </style>
 </head>
 <body>
+    <div id=topDiv></div>
+    <button id="myBtn" title="Go to top" onclick="$('#topDiv').animatescroll();">Top</button>
     <div class="container">
         <section class="row">
-          <div class = "col-md-8">
+          <div class = "col-md-12">
             <div class = "Intro">
               <h1 class="intro-header">United States Labor Statistics</h1>
               <hr>
-              <p>This website is designed to visualize the laber breakdown state by state into common categories. </p>
+              <p>This website is designed to visualize the labor breakdown state by state into common categories. </p>
               <p>Select a state by clicking on it below to see a comparison of what industries are most people working in that state.</p>
   
             </div>
@@ -35,17 +37,14 @@
           </section>
         </div>
 
-<!-- <button class="btn demo-btn" onclick="$('body').animatescroll();">Click for a Demo</button> -->
-<!-- <a onclick="$('[id-or-class-of-element]').animatescroll();">Go to Element</a> -->
 <div id="chloropleth">
-
 </div>
 
 
       <div id="jobsequence"></div>
 
       <div id="chart">
-          <a onclick="$('[chart]').animatescroll();"></a>
+          <a onclick="$('#chart').animatescroll();"></a>
         <hr>
         <div id="explanation" style="visibility: hidden;">
           <span id="percentage"></span>

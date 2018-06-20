@@ -152,7 +152,7 @@
                 
         if(opts.element == "html,body") {
             // Get the distance of particular id or class from top
-            console.log(this)
+        //     console.log(this)
             //var offset = this.offsetTop;
             var offset = this.offset().top;
 
