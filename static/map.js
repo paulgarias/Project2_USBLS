@@ -29,7 +29,13 @@ var svg = d3.select("#chloropleth")
 			.append("svg")
 			.attr("width", width)
 			.attr("height", height);
-        
+
+var tooltip = d3.select('body').append('div')
+			.style('position','absolute')
+			.style('padding','0 5px')
+			.style('background','grey')
+			.style('color','white');
+				   
 // Append Div for tooltip to SVG
 var div = d3.select("body")
 		    .append("div")   
@@ -45,7 +51,8 @@ svg.selectAll("path")
 	.enter()
 	.append("path")
     .attr("d", path)
-    .attr("id",function(d){return d.properties.name;})
+	.attr("id",function(d){return d.properties.name;})
+	.attr("onclick", "$('#chart').animatescroll();")
 	.style("stroke", "#fff")
 	.style("stroke-width", "1")
 	.style("fill", function(d) {
@@ -60,8 +67,33 @@ svg.selectAll("path")
 	//If value is undefined…
 	return "rgb(213,222,217)";
 	}
-}).on("click", sunburstPlot);
-// 213,222,217 - nice color
-// USE rgb(167,77,78) FOR HOVER COLOR
+}).on("click", sunburstPlot)
+.on('mousemove',function(d){
+	tooltip.transition()
+			.style('opacity',0.8)
+			.duration(10)
+	tooltip.html(d.properties.name)
+			.style('left',(d3.mouse(this)[0]) + 'px')
+			.style('top',(d3.mouse(this)[1] +145) + 'px')
+})
+.on('mouseout', function(d) {
+	tooltip.transition()
+			.style('opacity',0.0)
+			.style('pointer-events','none')
+});;
+
 
 });
+
+
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+    }
+};
