@@ -144,6 +144,10 @@ function createVisualization(json) {
 
 // Get the history
 function gethistory(d) {
+	var jobhistdiv = document.getElementById("jobhistory");	
+	if (jobhistdiv.hasChildNodes) {
+		jobhistdiv.removeChild(jobhistdiv.firstChild);
+	}
 	if (d.data.value) {
 		d3.json("/jobshistory/"+stateName+"/"+d.data.name, function(response) {
 			console.log(response);
