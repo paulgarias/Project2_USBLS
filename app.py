@@ -47,7 +47,7 @@ def usa_jobs():
 @app.route('/alabama')
 def state_jobs():
     data = session_hist.query(jobsDB.year,jobsDB.tot_emp,jobsDB.state).filter(jobsDB.state=="Texas",jobsDB.occ_title=="Aerospace Engineering and Operations Technicians").all()
-    jsonitem = [{"year": item[1], "value":item[0]} for item in data]
+    jsonitem = [{"year": item[0], "value":item[1]} for item in data]
     return jsonify(jsonitem)
 
 if __name__ == "__main__":
