@@ -3,6 +3,7 @@ from flask_restful import Resource, Api
 
 from sqlalchemy import Column, Float, Integer, String, Text, create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.autmap import automap_base
 from sqlalchemy.orm import Session
 
 import json
@@ -18,6 +19,16 @@ engine = create_engine("sqlite:///myjson.sqlite")
 Base.metadata.create_all(engine)
 
 session = Session(bind=engine)
+
+
+engine_hist = create_engine("sqlite://histJobDB.sqlite")
+
+Base_hist = automap_base()
+Base_hist.prepare(engine_hist, reflect=True)
+
+jobDB = Base_hist.classes.jobDB
+
+session_hist = Session(engine_hist)
 
 app = Flask(__name__)
 api = Api(app)
@@ -36,6 +47,12 @@ def us_states():
 def usa_jobs():
     data = session.query(myJson.json).filter(myJson.jsonid==1).all()
     return jsonify(json.loads(data[0][0]))
+
+@app.route('/alabama')
+def state_jobs():
+    data = session.query(jobsDB.year,jobsDB.tot_emp,jobsDB.state).filter(jobsDB.state=="Texas",jobsDB.occ_title=="Aerospace Engineering and Operations Technicians").all()
+    jsonitem = [{"year":item[1],"value":item[0]} for item in data]
+    return jsonify(jsonitem)
 
 if __name__ == "__main__":
     app.run(debug=True)
