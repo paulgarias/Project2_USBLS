@@ -132,7 +132,8 @@ function createVisualization(json) {
       .attr("fill-rule", "evenodd")
       .style("fill", function(d) { return colorScale(majorColors(d.data.name, d.data)); })
       .style("opacity", 1)
-      .on("mouseover", mouseover);
+      .on("mouseover", mouseover)
+      .on("click", gethistory);
 
   // Add the mouseleave handler to the bounding circle.
   d3.select("#container").on("mouseleave", mouseleave);
@@ -140,6 +141,15 @@ function createVisualization(json) {
   // Get total size of the tree = value of root node from partition.
   totalSize = path.datum().value;
  };
+
+// Get the history
+function gethistory(d) {
+	if (d.data.value) {
+		d3.json("/jobhistory/Texas/"+d.data.name, function(response) {
+			console.log(response);
+		});
+	}
+}
 
 // Fade all but the current sequence, and show it in the breadcrumb trail.
 function mouseover(d) {
