@@ -147,6 +147,15 @@ function gethistory(d) {
 	if (d.data.value) {
 		d3.json("/jobshistory/"+stateName+"/"+d.data.name, function(response) {
 			console.log(response);
+		var width = 400; 
+		var height = 400;	
+
+		var vis = d3.select("#jobhistory").append("svg:svg")
+		    .attr("width", width)
+		    .attr("height", height)
+		    .append("svg:g")
+		    .attr("id", "container")
+		    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 		});
 	};
 };
