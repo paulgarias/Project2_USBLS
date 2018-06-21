@@ -24,7 +24,7 @@ session = Session(bind=engine)
 engine_hist = create_engine("sqlite:///histJobDB.sqlite")
 Base_hist = automap_base()
 Base_hist.prepare(engine_hist, reflect=True)
-jobDB = Base_hist.classes.jobDB
+jobsDB = Base_hist.classes.jobsDB
 session_hist = Session(engine_hist)
 
 app = Flask(__name__)
