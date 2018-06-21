@@ -46,10 +46,10 @@ def usa_jobs():
 
 
 class JobsHistory(Resource):
-def get(self, state, occTitle):
-    data = session_hist.query(jobsDB.year,jobsDB.tot_emp,jobsDB.state).filter(jobsDB.state==state,jobsDB.occ_title==occTitle).all()
-    jsonitem = [{"year": item[0], "value":item[1]} for item in data]
-    return jsonify(jsonitem)
+    def get(self, state, occTitle):
+        data = session_hist.query(jobsDB.year,jobsDB.tot_emp,jobsDB.state).filter(jobsDB.state==state,jobsDB.occ_title==occTitle).all()
+        jsonitem = [{"year": item[0], "value":item[1]} for item in data]
+        return jsonify(jsonitem)
 
 #@app.route('/alabama')
 #def state_jobs():
