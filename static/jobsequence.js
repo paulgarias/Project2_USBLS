@@ -142,6 +142,8 @@ function createVisualization(json) {
   totalSize = path.datum().value;
  };
 
+var jobhistvis;
+
 // Get the history
 function gethistory(d) {
 	var jobhistdiv = document.getElementById("jobhistory");	
@@ -153,14 +155,18 @@ function gethistory(d) {
 			console.log(response);
 		var width = 400; 
 		var height = 400;	
+		var yLinearScale = d3.scaleLinear()
+		var yMaxVal = d3.max(response.map(response=>response.value))
+		yLinearScale.domain([0,maxWork+2]).range([height,0])
 
-		var vis = d3.select("#jobhistory").append("svg:svg")
+		jobhistvis = d3.select("#jobhistory").append("svg:svg")
 		    .attr("width", width)
 		    .attr("height", height)
 		    .append("svg:g")
 		    .attr("id", "container")
 		    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 		});
+		
 	};
 };
 
