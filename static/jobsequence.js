@@ -146,7 +146,7 @@ function createVisualization(json) {
 function gethistory(d) {
 	if (d.data.value) {
 		d3.json("/jobshistory/"+stateName+"/"+d.data.name, function(response) {
-			//console.log(response);
+			console.log(response);
 		});
 	};
 };
