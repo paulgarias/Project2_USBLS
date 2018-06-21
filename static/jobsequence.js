@@ -75,9 +75,10 @@ var arc = d3.arc()
 var json3;
 var json4;
 var nodes2;
+var stateName;
 
 function sunburstPlot(event) {
-	var stateName = event.properties.name;
+	stateName = event.properties.name;
 	var getSVGcontainer = document.getElementById("container")
 	
 	while (getSVGcontainer.hasChildNodes()) {
