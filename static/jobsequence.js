@@ -145,7 +145,7 @@ function createVisualization(json) {
 // Get the history
 function gethistory(d) {
 	var jobhistdiv = document.getElementById("jobhistory");	
-	if (jobhistdiv.hasChildNodes) {
+	if (jobhistdiv.hasChildNodes()) {
 		jobhistdiv.removeChild(jobhistdiv.firstChild);
 	}
 	if (d.data.value) {
