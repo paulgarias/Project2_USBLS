@@ -157,7 +157,7 @@ function gethistory(d) {
 		var height = 400;	
 		var yLinearScale = d3.scaleLinear()
 		var yMaxVal = d3.max(response.map(response=>response.value))
-		yLinearScale.domain([0,maxWork+2]).range([height,0])
+		yLinearScale.domain([0,yMaxVal+2]).range([height,0])
 
 		jobhistvis = d3.select("#jobhistory").append("svg:svg")
 		    .attr("width", width)
