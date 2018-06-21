@@ -145,7 +145,7 @@ function createVisualization(json) {
 // Get the history
 function gethistory(d) {
 	if (d.data.value) {
-		d3.json("/jobhistory/Texas/"+d.data.name, function(response) {
+		d3.json("/jobshistory/Texas/"+d.data.name, function(response) {
 			console.log(response);
 		});
 	}
