@@ -160,8 +160,8 @@ function gethistory(d) {
 		var yMaxVal = d3.max(response.map(response=>response.value))
 		var xMaxVal = d3.max(response.map(response=>response.year)) 
 		var xMinVal = d3.min(response.map(response=>response.year)) 
-		xScale.domain([xMinVal,xMaxVal]).range([0,width])
-		yLinearScale.domain([0,yMaxVal+2]).range([height,0])
+		xScale.domain([xMinVal,xMaxVal]).range([0,width]);
+		yLinearScale.domain([0,yMaxVal+2]).range([height,0]);
 
 		jobhistvis = d3.select("#jobhistory").append("svg:svg")
 		    .attr("width", width)
@@ -169,7 +169,7 @@ function gethistory(d) {
 		    .append("svg:g")
 		    .attr("id", "container")
 		    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-		});
+
 		leftAxis = d3.axisLeft(yLinearScale);
         	bottomAxis = d3.axisBottom(xScale);
 		jobhistvis.append("g")
@@ -177,6 +177,7 @@ function gethistory(d) {
                 	.attr("id","xAxisGroup")
                 	.call(bottomAxis)
                 	.attr("font-size","14px");
+		});
 		
 	};
 };
