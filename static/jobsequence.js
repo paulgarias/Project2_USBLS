@@ -143,41 +143,80 @@ function createVisualization(json) {
  };
 
 var jobhistvis;
+var xScale ; 
 
 // Get the history
 function gethistory(d) {
 	var jobhistdiv = document.getElementById("jobhistory");	
 	if (jobhistdiv.hasChildNodes()) {
-		jobhistdiv.removeChild(jobhistdiv.firstChild);
-	}
+		for (var i =0 ; i < jobhistdiv.children.length; i++ ){
+			if(jobhistdiv.children[i].tagName=="svg") {
+				jobhistdiv.removeChild(jobhistdiv.children[i]);
+			};
+		};
+	};
 	if (d.data.value) {
 		d3.json("/jobshistory/"+stateName+"/"+d.data.name, function(response) {
 			console.log(response);
-		var width = 400; 
-		var height = 400;	
-		var xScale = d3.scaleLinear()
+		var svgWidth = jobhistdiv.clientWidth; 
+		var svgHeight = 400;
+		var margin = {top: 10, bottom:60, left:60, right:5};
+	
+		var width = svgWidth - margin.left - margin.right;
+		var height = svgHeight - margin.top - margin.bottom;	
+
+		var xyears = response.map(response=>response.year)
+
+		xScale = d3.scaleBand()
+			.domain(xyears)
+			.range([0,width-margin.right-margin.left])
+			.paddingInner(0.1)
+			.paddingOuter(0.2)
 		var yLinearScale = d3.scaleLinear()
 		var yMaxVal = d3.max(response.map(response=>response.value))
-		var xMaxVal = d3.max(response.map(response=>response.year)) 
-		var xMinVal = d3.min(response.map(response=>response.year)) 
-		xScale.domain([xMinVal,xMaxVal]).range([0,width]);
-		yLinearScale.domain([0,yMaxVal+2]).range([height,0]);
+		var yMinVal = d3.min(response.map(response=>response.value))
+		var yDiff = yMaxVal-yMinVal
+		yLinearScale.domain([yMinVal-yDiff*0.1,yMaxVal+yDiff*0.1]).range([height-margin.bottom,margin.top]);
 
 		jobhistvis = d3.select("#jobhistory").append("svg:svg")
 		    .attr("width", width)
 		    .attr("height", height)
 		    .append("svg:g")
-		    .attr("id", "container")
-		    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+		    .attr("id", "containerhist")
+		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 		leftAxis = d3.axisLeft(yLinearScale);
         	bottomAxis = d3.axisBottom(xScale);
+
 		jobhistvis.append("g")
-                	.attr("transform", `translate(0, ${height})`)
+                	.attr("transform", `translate(${0}, ${height-margin.bottom})`)
                 	.attr("id","xAxisGroup")
                 	.call(bottomAxis)
+                	.attr("font-size","14px")
+
+		jobhistvis.append("g")
+                	.call(leftAxis)
+                	.attr("id","leftAxis")
                 	.attr("font-size","14px");
+		
+		jobhistvis.append("g")
+			.selectAll("rect")
+			.data(response)
+			.enter()
+			.append("rect")
+			.attr("height",function(d) {
+					return height-margin.bottom - yLinearScale(d.value); 
+				})
+			.attr("width",xScale.bandwidth())
+			.attr("fill","#a7c9df")
+			.attr("x", function(d) {
+				return xScale(d.year);
+				})	
+			.attr("y",function(d) {
+					return yLinearScale(d.value);
+			})
 		});
+			
 		
 	};
 };
