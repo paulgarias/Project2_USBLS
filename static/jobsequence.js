@@ -156,8 +156,8 @@ function gethistory(d) {
 		};
 	};
 	if (d.data.value) {
-		console.log(d.data.name.replace('/','---'))
-		d3.json("/jobshistory/"+stateName+"/"+d.data.name, function(response) {
+		var occ_title =  d.data.name.replace('/','---')
+		d3.json("/jobshistory/"+stateName+"/"+occ_title, function(response) {
 			console.log(response);
 		var svgWidth = jobhistdiv.clientWidth; 
 		var svgHeight = 400;
