@@ -174,9 +174,12 @@ function gethistory(d) {
 			.paddingInner(0.1)
 			.paddingOuter(0.2)
 		var yLinearScale = d3.scaleLinear()
-		var yMaxVal = d3.max(response.map(response=>response.value))*1.2
-		var yMinVal = d3.min(response.map(response=>response.value))*0.8
+		var yMaxVal = d3.max(response.map(response=>response.value))
+		var yMinVal = d3.min(response.map(response=>response.value))
 		var yDiff = yMaxVal-yMinVal
+		if (yDiff < 1) {
+			yDiff = yMaxVal;
+		};
 		yLinearScale.domain([yMinVal-yDiff*0.1,yMaxVal+yDiff*0.1]).range([height-margin.bottom,margin.top]);
 
 		jobhistvis = d3.select("#jobhistory").append("svg:svg")
