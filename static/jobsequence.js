@@ -156,8 +156,8 @@ function gethistory(d) {
 		};
 	};
 	if (d.data.value) {
-		var occ_title =  d.data.name.replace('/','---')
-		d3.json("/jobshistory/"+stateName+"/"+occ_title, function(response) {
+		var occTitle =  d.data.name.replace('/','---')
+		d3.json("/jobshistory/"+stateName+"/"+occTitle, function(response) {
 			console.log(response);
 		var svgWidth = jobhistdiv.clientWidth; 
 		var svgHeight = 400;
@@ -174,8 +174,8 @@ function gethistory(d) {
 			.paddingInner(0.1)
 			.paddingOuter(0.2)
 		var yLinearScale = d3.scaleLinear()
-		var yMaxVal = d3.max(response.map(response=>response.value))
-		var yMinVal = d3.min(response.map(response=>response.value))
+		var yMaxVal = d3.max(response.map(response=>response.value))*1.2
+		var yMinVal = d3.min(response.map(response=>response.value))*0.8
 		var yDiff = yMaxVal-yMinVal
 		yLinearScale.domain([yMinVal-yDiff*0.1,yMaxVal+yDiff*0.1]).range([height-margin.bottom,margin.top]);
 
