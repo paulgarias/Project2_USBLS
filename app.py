@@ -86,7 +86,7 @@ class JobsHistory(Resource):
         X = np.array(X).reshape(len(X),1)
         y = np.array(y).reshape(len(y),1)
         predModel=ModelPredictor(X,y)
-        X_new,y_new = caseMP.get_new_data_w_predict() 
+        X_new,y_new = predModel.get_new_data_w_predict() 
         jsonitem = [{"year": int(item[0]), "value":int(item[1])} for item in zip(X_new,y_new)]
         return jsonify(jsonitem)
 
