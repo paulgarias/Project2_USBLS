@@ -6,6 +6,14 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 
+
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import Pipeline
+from sklearn import datasets, linear_model
+from sklearn.metrics import mean_squared_error, r2_score
+
+import numpy as np
+
 import json
 
 Base = declarative_base()
@@ -50,13 +58,26 @@ class JobsHistory(Resource):
         jobTitle = occTitle.replace('---','/')
         data = session_hist.query(jobsDB.year,jobsDB.tot_emp,jobsDB.state).filter(jobsDB.state==state,jobsDB.occ_title==jobTitle).all()
         jsonitem = [{"year": item[0], "value":item[1]} for item in data]
+	class ModelPredictor(object):
+            def __init__(self,X,y):
+                self.X = X
+                self.y = y
+                #case 1 linear
+                self.r2score = []
+                self.models = []
+                self.models.append(linear_model.LinearRegression())
+                self.models[0].fit(self.X,self.y)
+                self.r2score.append(r2_score(self.y,self.models[0].predict(self.X)))
+                for i in range(1,5):
+                    self.models.append(Pipeline([('poly', PolynomialFeatures(degree=i+1)),('linear', linear_model.LinearRegression(fit_intercept=False))]))
+                    self.models[i].fit(self.X, self.y)
+                    self.r2score.append(r2_score(self.y,self.models[i].predict(self.X)))
+            def get_least_r2_model(self):
+                return self.models[self.r2score.index(max(self.r2score))]
+            def get_new_data_w_predict(self):
+                model = self.get_least_r2_model()
+                return np.vstack((self.X,2018)),np.vstack((y,model.predict(2018)))
         return jsonify(jsonitem)
-
-#@app.route('/alabama')
-#def state_jobs():
-#    data = session_hist.query(jobsDB.year,jobsDB.tot_emp,jobsDB.state).filter(jobsDB.state=="Texas",jobsDB.occ_title=="Aerospace Engineering and Operations Technicians").all()
-#    jsonitem = [{"year": item[0], "value":item[1]} for item in data]
-#    return jsonify(jsonitem)
 
 api.add_resource(JobsHistory,'/jobshistory/<string:state>/<string:occTitle>')
 
