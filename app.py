@@ -58,7 +58,7 @@ class JobsHistory(Resource):
         jobTitle = occTitle.replace('---','/')
         data = session_hist.query(jobsDB.year,jobsDB.tot_emp,jobsDB.state).filter(jobsDB.state==state,jobsDB.occ_title==jobTitle).all()
         jsonitem = [{"year": item[0], "value":item[1]} for item in data]
-	class ModelPredictor(object):
+        class ModelPredictor(object):
             def __init__(self,X,y):
                 self.X = X
                 self.y = y
