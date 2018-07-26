@@ -77,6 +77,17 @@ class JobsHistory(Resource):
             def get_new_data_w_predict(self):
                 model = self.get_least_r2_model()
                 return np.vstack((self.X,2018)),np.vstack((y,model.predict(2018)))
+        X = []
+        y = []
+        for row in data:
+            print(row)
+            X.append(row[0])
+            y.append(row[1])
+        X = np.array(X).reshape(len(X),1)
+        y = np.array(y).reshape(len(y),1)
+        predModel=ModelPredictor(X,y)
+        X_new,y_new = caseMP.get_new_data_w_predict() 
+        jsonitem = [{"year": int(item[0]), "value":int(item[1])} for item in zip(X_new,y_new)]
         return jsonify(jsonitem)
 
 api.add_resource(JobsHistory,'/jobshistory/<string:state>/<string:occTitle>')
