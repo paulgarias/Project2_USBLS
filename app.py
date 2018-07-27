@@ -42,8 +42,8 @@ api = Api(app)
 def index():
     return render_template("index.html")
 
-@app.route('/aboutus')
-def aboutus():
+@app.route('/contact')
+def contact():
     return render_template("contact.html")
 
 @app.route('/us-states')
