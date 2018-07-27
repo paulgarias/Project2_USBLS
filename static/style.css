@@ -48,7 +48,7 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
 	font-weight: 400;
-	background-color: rgb(245, 221, 186);
+	background-color: rgb(47,122,194);
 	width: 960px;
 	height: 700px;
 	margin-top: 10px;
@@ -139,3 +139,50 @@ body {
     opacity: 1;
 } 
 
+text{
+	font-size:12px;
+}
+.mainBars rect{
+  shape-rendering: auto;
+  fill-opacity: 0;
+  stroke-width: 0.5px;
+  stroke: rgb(0, 0, 0);
+  stroke-opacity: 0;
+}
+.subBars{
+	shape-rendering:crispEdges;
+}
+.edges{
+	stroke:none;
+	fill-opacity:0.5;
+}
+.header{
+	text-anchor:middle;
+	font-size:16px;
+}
+line{
+	stroke:grey;
+}
+
+.node circle {
+    fill: #999;
+  }
+  
+  .node text {
+    font: 10px sans-serif;
+  }
+  
+  .node--internal circle {
+    fill: #555;
+  }
+  
+  .node--internal text {
+    text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+  }
+  
+  .link {
+    fill: none;
+    stroke: #555;
+    stroke-opacity: 0.4;
+    stroke-width: 1.5px;
+  }
