@@ -75,9 +75,10 @@ var arc = d3.arc()
 var json3;
 var json4;
 var nodes2;
+var stateName;
 
 function sunburstPlot(event) {
-	var stateName = event.properties.name;
+	stateName = event.properties.name;
 	var getSVGcontainer = document.getElementById("container")
 	
 	while (getSVGcontainer.hasChildNodes()) {
@@ -131,7 +132,8 @@ function createVisualization(json) {
       .attr("fill-rule", "evenodd")
       .style("fill", function(d) { return colorScale(majorColors(d.data.name, d.data)); })
       .style("opacity", 1)
-      .on("mouseover", mouseover);
+      .on("mouseover", mouseover)
+      .on("click", gethistory);
 
   // Add the mouseleave handler to the bounding circle.
   d3.select("#container").on("mouseleave", mouseleave);
@@ -139,6 +141,89 @@ function createVisualization(json) {
   // Get total size of the tree = value of root node from partition.
   totalSize = path.datum().value;
  };
+
+var jobhistvis;
+var xScale ; 
+
+// Get the history
+function gethistory(d) {
+	var jobhistdiv = document.getElementById("jobhistory");	
+	if (jobhistdiv.hasChildNodes()) {
+		for (var i =0 ; i < jobhistdiv.children.length; i++ ){
+			if(jobhistdiv.children[i].tagName=="svg") {
+				jobhistdiv.removeChild(jobhistdiv.children[i]);
+			};
+		};
+	};
+	if (d.data.value) {
+		var occTitle =  d.data.name.replace('/','---')
+		d3.json("/jobshistory/"+stateName+"/"+occTitle, function(response) {
+			console.log(response);
+		var svgWidth = jobhistdiv.clientWidth; 
+		var svgHeight = 400;
+		var margin = {top: 10, bottom:60, left:60, right:5};
+	
+		var width = svgWidth - margin.left - margin.right;
+		var height = svgHeight - margin.top - margin.bottom;	
+
+		var xyears = response.map(response=>response.year)
+
+		xScale = d3.scaleBand()
+			.domain(xyears)
+			.range([0,width-margin.right-margin.left])
+			.paddingInner(0.1)
+			.paddingOuter(0.2)
+		var yLinearScale = d3.scaleLinear()
+		var yMaxVal = d3.max(response.map(response=>response.value))
+		var yMinVal = d3.min(response.map(response=>response.value))
+		var yDiff = yMaxVal-yMinVal
+		if (yDiff < 1) {
+			yDiff = yMaxVal;
+		};
+		yLinearScale.domain([yMinVal-yDiff*0.1,yMaxVal+yDiff*0.1]).range([height-margin.bottom,margin.top]);
+
+		jobhistvis = d3.select("#jobhistory").append("svg:svg")
+		    .attr("width", width)
+		    .attr("height", height)
+		    .append("svg:g")
+		    .attr("id", "containerhist")
+		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		leftAxis = d3.axisLeft(yLinearScale);
+        	bottomAxis = d3.axisBottom(xScale);
+
+		jobhistvis.append("g")
+                	.attr("transform", `translate(${0}, ${height-margin.bottom})`)
+                	.attr("id","xAxisGroup")
+                	.call(bottomAxis)
+                	.attr("font-size","14px")
+
+		jobhistvis.append("g")
+                	.call(leftAxis)
+                	.attr("id","leftAxis")
+                	.attr("font-size","14px");
+		
+		jobhistvis.append("g")
+			.selectAll("rect")
+			.data(response)
+			.enter()
+			.append("rect")
+			.attr("height",function(d) {
+					return height-margin.bottom - yLinearScale(d.value); 
+				})
+			.attr("width",xScale.bandwidth())
+			.attr("fill","#a7c9df")
+			.attr("x", function(d) {
+				return xScale(d.year);
+				})	
+			.attr("y",function(d) {
+					return yLinearScale(d.value);
+			})
+		});
+			
+		
+	};
+};
 
 // Fade all but the current sequence, and show it in the breadcrumb trail.
 function mouseover(d) {
