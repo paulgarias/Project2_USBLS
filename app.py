@@ -42,6 +42,10 @@ api = Api(app)
 def index():
     return render_template("index.html")
 
+@app.route('/aboutus')
+def aboutus():
+    return render_template("contact.html")
+
 @app.route('/us-states')
 def us_states():
     data = session.query(myJson.json).filter(myJson.jsonid==2).all()
