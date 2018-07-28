@@ -38,16 +38,19 @@ html {
     }
 }
 
-@media only screen and (max-width: 760px) {
+/* @media only screen and (max-width: 760px) {
     .navbar-header {
         background-color: #e22323a2;
+        width: 100%;
     }
-}
+} */
 /* Legend Font Style */
 body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
-	font-weight: 400;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.842);
+    text-align: justify;
 	background-color: rgb(47,122,194);
 	width: 960px;
 	height: 700px;
@@ -64,6 +67,7 @@ body {
 @media only screen and (max-width: 760px) {
     .navbar-header {
         background-color: #ffffffa2;
+        width: 100%;
     }
 }
 
