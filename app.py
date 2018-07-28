@@ -46,6 +46,11 @@ def index():
 def contact():
     return render_template("contact.html")
 
+@app.route('/dendo')
+def dendo():
+    return render_template("dendo.html")
+# Confirm if need to load data separately 
+
 @app.route('/us-states')
 def us_states():
     data = session.query(myJson.json).filter(myJson.jsonid==2).all()

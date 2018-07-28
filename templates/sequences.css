@@ -3,6 +3,7 @@ body {
   font-size: 12px;
   font-weight: 400;
   background-color: #fff;
+  color: white;
   width: 960px;
   height: 700px;
   margin-top: 10px;
@@ -46,7 +47,7 @@ body {
   left: 305px;
   width: 140px;
   text-align: center;
-  color: #666;
+  color: rgb(255, 255, 255);
   z-index: -1;
 }
 
